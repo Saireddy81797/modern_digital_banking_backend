@@ -1,59 +1,50 @@
 from fastapi import APIRouter, Depends, HTTPException
 from sqlalchemy.orm import Session
+from fastapi.security import OAuth2PasswordRequestForm
+
 from database import SessionLocal
 from models import User
-from schemas import RegisterUser, LoginUser
+from schemas import RegisterUser
 from auth import hash_password, verify_password, create_access_token
-from fastapi.security import OAuth2PasswordRequestForm
-from datetime import datetime, timedelta
-from jose import jwt
-from auth import verify_password
-
-router = APIRouter(tags=["users"])
-
-SECRET_KEY = "SECRET123"
-ALGORITHM = "HS256"
-ACCESS_TOKEN_EXPIRE_MINUTES = 30
-
+from database import get_db
 router = APIRouter(tags=["Users"])
 
-def get_db():
-    db = SessionLocal()
-    try:
-        yield db
-    finally:
-        db.close()
+
+# ================= REGISTER =================
 
 @router.post("/register")
 def register(user: RegisterUser, db: Session = Depends(get_db)):
-    if db.query(User).filter(User.email == user.email).first():
-        raise HTTPException(400, "Email already exists")
+    existing = db.query(User).filter(User.email == user.email).first()
+    if existing:
+        raise HTTPException(status_code=400, detail="Email already exists")
 
     new_user = User(
         name=user.name,
         email=user.email,
-        password=hash_password(user.password)
+        password=hash_password(user.password),
+        phone=user.phone
     )
+
     db.add(new_user)
     db.commit()
-    return {"message": "User registered"}
+    db.refresh(new_user)
+
+    return {"message": "User registered successfully"}
+
+# ================= LOGIN =================
 
 @router.post("/login")
-def login_user(
+def login(
     form_data: OAuth2PasswordRequestForm = Depends(),
     db: Session = Depends(get_db)
 ):
     user = db.query(User).filter(User.email == form_data.username).first()
 
-    if not user or not verify_password(form_data.password, user.password):
+    if not user or not verify_password(form_data.password,user.password):
         raise HTTPException(status_code=401, detail="Invalid credentials")
 
-    payload = {
-        "sub": user.email,
-        "exp": datetime.utcnow() + timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    }
-
-    token = jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
+    # ✅ TOKEN STORES user.id
+    token = create_access_token(user.id)
 
     return {
         "access_token": token,

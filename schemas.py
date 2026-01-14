@@ -1,13 +1,15 @@
-from pydantic import BaseModel
+from pydantic import BaseModel,EmailStr,Field
+from typing import Optional
 
 class RegisterUser(BaseModel):
     name: str
-    email: str
+    email: EmailStr
     password: str
+    phone: str = Field(...,min_length=10,max_length=15)
 
 class LoginUser(BaseModel):
     email: str
-    password: str
+    hashed_password: str
 
 class Token(BaseModel):
     access_token: str
@@ -17,8 +19,16 @@ class AccountCreate(BaseModel):
     bank_name: str
     account_type: str
     balance: float = 0
+ 
 
 class TransactionCreate(BaseModel):
     account_id: int
     amount: float
-    type: str
+    txn_type: str
+    description:str| None=None
+
+class TransactionResponse(BaseModel):
+        id:int
+        account_id:int
+        amount: float
+        txn_type: str
