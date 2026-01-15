@@ -1,62 +1,64 @@
-## Modern Digital Banking Backend
+# Modern Digital Banking Backend
 
-A FastAPI-based backend system for a modern digital banking dashboard.
-This backend handles authentication, accounts, transactions, categorization, and budgeting, built using a milestone-driven architecture.
+## Backend Service for Digital Banking Dashboard
+
+A FastAPI-based backend that provides secure authentication, account management, transaction processing, transaction categorization, and monthly budgeting features for a modern digital banking application.
+
+---
 
 ## Project Overview
 
-This project serves as the backend for a digital banking application that allows users to manage multiple accounts, track transactions, categorize spending, and monitor monthly budgets with real-time progress calculations.
+This backend is designed to support a digital banking dashboard where users can manage multiple bank accounts, track transactions, categorize spending, and monitor monthly budgets.  
+The application follows a modular and scalable architecture suitable for real-world backend systems.
 
-The backend is designed to be modular, scalable, and frontend-agnostic, enabling integration with React or Streamlit dashboards.
+---
 
-## Key Features :
+## Features
+
 ### Authentication & User Management
-
-JWT-based authentication
-
-Secure user registration and login
-
-User-specific data access control
+JWT-based authentication for secure login and registration.  
+Ensures user-specific access to accounts, transactions, and budgets.
 
 ### Account Management
-
-Create and manage multiple bank accounts
-
-Accounts linked securely to users
-
+Allows users to create and manage multiple bank accounts.  
+Each account is linked securely to a single user.
 
 ### Transaction Management
+Supports credit and debit transactions.  
+Provides CSV upload functionality for bulk transaction ingestion.
 
-Create credit and debit transactions
+### Transaction Categorization
+Automatically categorizes transactions using keyword-based rules.  
+Supports manual category updates when auto-categorization is incorrect.
 
-Upload transactions in bulk using CSV files
+### Budgeting & Spend Tracking
+Allows users to create monthly budgets by category.  
+Calculates real-time spending and compares it against budget limits.
 
-Fetch transactions per account
+---
 
-### Transaction Categorization (Milestone-2)
+## Technology Stack
 
-Automatic categorization using keyword-based rules
+FastAPI is used as the backend framework.  
+SQLAlchemy ORM is used for database interactions.  
+JWT is used for authentication and authorization.  
+PostgreSQL or SQLite can be used as the database.
 
-Categories include:
+---
+## Project Structure
+modern_digital_banking_backend/
+├── main.py
+├── database.py
+├── models.py
+├── schemas.py
+├── requirements.txt
+├── services/
+│ └── categorization.py
+└── routers/
+├── auth.py
+├── accounts.py
+├── transactions.py
+└── budgets.py
 
-Food
+## Project Structure
 
-Travel
-
-Shopping
-
-Utilities
-
-Others
-
-Manual re-categorization API for corrections
-
-### Budgeting & Spend Tracking (Milestone-2)
-
-Create monthly budgets per category
-
-View all budgets for a user
-
-Calculate real-time budget progress
-
-Spent amount derived dynamically from transactions
