@@ -9,8 +9,8 @@ This project serves as the backend for a digital banking application that allows
 
 The backend is designed to be modular, scalable, and frontend-agnostic, enabling integration with React or Streamlit dashboards.
 
-## Key Features
-## Authentication & User Management
+## Key Features :
+### Authentication & User Management
 
 JWT-based authentication
 
