@@ -18,14 +18,14 @@ Secure user registration and login
 
 User-specific data access control
 
-## Account Management
+### Account Management
 
 Create and manage multiple bank accounts
 
 Accounts linked securely to users
 
 
-## Transaction Management
+### Transaction Management
 
 Create credit and debit transactions
 
@@ -33,7 +33,7 @@ Upload transactions in bulk using CSV files
 
 Fetch transactions per account
 
-## Transaction Categorization (Milestone-2)
+### Transaction Categorization (Milestone-2)
 
 Automatic categorization using keyword-based rules
 
@@ -51,7 +51,7 @@ Others
 
 Manual re-categorization API for corrections
 
-## Budgeting & Spend Tracking (Milestone-2)
+### Budgeting & Spend Tracking (Milestone-2)
 
 Create monthly budgets per category
 
