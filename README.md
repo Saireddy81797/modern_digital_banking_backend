@@ -1,62 +1,61 @@
-🏦 Modern Digital Banking Backend
+Modern Digital Banking Backend
 
-A scalable FastAPI-based backend for a modern digital banking dashboard that supports user authentication, account management, transaction processing, budgeting, and financial insights.
+A FastAPI-based backend system for a modern digital banking dashboard.
+This backend handles authentication, accounts, transactions, categorization, and budgeting, built using a milestone-driven architecture.
 
-This project follows a modular backend architecture and is built as part of an 8-week milestone-driven implementation.
+Project Overview
 
-🚀 Features Implemented
-🔐 Authentication & User Management
+This project serves as the backend for a digital banking application that allows users to manage multiple accounts, track transactions, categorize spending, and monitor monthly budgets with real-time progress calculations.
+
+The backend is designed to be modular, scalable, and frontend-agnostic, enabling integration with React or Streamlit dashboards.
+
+Key Features
+Authentication & User Management
 
 JWT-based authentication
 
 Secure user registration and login
 
-User-scoped data access
+User-specific data access control
 
-🏦 Accounts
+Account Management
 
 Create and manage multiple bank accounts
 
-Account-to-user relationship enforcement
+Accounts linked securely to users
 
-💳 Transactions
+Transaction Management
 
-Create transactions (credit/debit)
+Create credit and debit transactions
 
-Bulk transaction upload via CSV
+Upload transactions in bulk using CSV files
 
-Transaction listing per account
+Fetch transactions per account
 
-🏷️ Transaction Categorization (Milestone-2)
+Transaction Categorization (Milestone-2)
 
-Automatic categorization based on transaction description keywords
+Automatic categorization using keyword-based rules
 
-Categories such as food, travel, shopping, utilities, others
+Categories include:
 
-Manual re-categorization API for correcting categories
+Food
 
-📊 Budgets & Spend Tracking (Milestone-2)
+Travel
 
-Create monthly budgets by category
+Shopping
 
-List user-specific budgets
+Utilities
 
-Real-time budget progress calculation
+Others
 
-Computes spent amount from transactions
+Manual re-categorization API for corrections
 
-Supports month & year based tracking
+Budgeting & Spend Tracking (Milestone-2)
 
-🧱 Tech Stack
+Create monthly budgets per category
 
-Backend Framework: FastAPI
+View all budgets for a user
 
-Database: PostgreSQL / SQLite (via SQLAlchemy ORM)
+Calculate real-time budget progress
 
-Authentication: JWT
-
-ORM: SQLAlchemy
-
-API Docs: Swagger (FastAPI /docs)
-
-Language: Python 3.10+
+Spent amount derived dynamically from transactions
