@@ -45,6 +45,9 @@ JWT is used for authentication and authorization.
 PostgreSQL or SQLite can be used as the database.
 
 ---
+## Project Structure
+
+```
 modern_digital_banking_backend/
 │
 ├── main.py
@@ -61,3 +64,4 @@ modern_digital_banking_backend/
     ├── accounts.py
     ├── transactions.py
     └── budgets.py
+```
