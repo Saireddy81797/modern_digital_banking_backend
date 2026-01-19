@@ -5,9 +5,8 @@ from models import User, Account
 from database import get_db
 from schemas import AccountCreate
 
-# ✅ FIXED IMPORT (auth utils file)
+# ✅ FIXED IMPORT
 from routers.auth_utils import get_current_user
-
 
 router = APIRouter(tags=["Accounts"])
 
