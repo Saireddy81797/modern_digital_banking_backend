@@ -8,8 +8,6 @@ from sqlalchemy.orm import Session
 from database import get_db
 from models import User
 
-# ================= CONFIG =================
-
 SECRET_KEY = "SECRET123"
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60
@@ -18,15 +16,11 @@ pwd_context = CryptContext(schemes=["bcrypt"], deprecated="auto")
 
 oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/auth/login")
 
-# ================= PASSWORD =================
-
 def hash_password(password: str) -> str:
     return pwd_context.hash(password)
 
-
 def verify_password(plain_password: str, hashed_password: str) -> bool:
     return pwd_context.verify(plain_password, hashed_password)
-
 
 def create_access_token(user_id: int):
     payload = {
@@ -35,16 +29,13 @@ def create_access_token(user_id: int):
     }
     return jwt.encode(payload, SECRET_KEY, algorithm=ALGORITHM)
 
-
-# ================= CURRENT USER =================
-
 def get_current_user(
     token: str = Depends(oauth2_scheme),
     db: Session = Depends(get_db)
 ):
     credentials_exception = HTTPException(
         status_code=status.HTTP_401_UNAUTHORIZED,
-        detail="Could not validate credentials",
+        detail="User not found",
         headers={"WWW-Authenticate": "Bearer"},
     )
 
@@ -53,7 +44,6 @@ def get_current_user(
         user_id = payload.get("sub")
         if user_id is None:
             raise credentials_exception
-
     except JWTError:
         raise credentials_exception
 
