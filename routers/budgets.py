@@ -3,9 +3,12 @@ from sqlalchemy.orm import Session
 from sqlalchemy import func, extract
 
 from database import get_db
-from auth import get_current_user
 from models import Budget, Transaction
 from schemas import BudgetCreate, BudgetResponse
+
+# ✅ FIXED IMPORT (auth utils file)
+from routers.auth_utils import get_current_user
+
 
 router = APIRouter(
     prefix="/budgets",
