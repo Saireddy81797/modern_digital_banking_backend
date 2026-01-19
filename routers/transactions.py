@@ -4,11 +4,13 @@ from typing import List
 import csv, io
 
 from database import get_db
-from auth import get_current_user
 from models import User, Account, Transaction
 from schemas import TransactionCreate, TransactionResponse
 
-# ✅ ADD THIS IMPORT
+# ✅ FIXED IMPORT (auth utils file)
+from routers.auth_utils import get_current_user
+
+# ✅ AUTO CATEGORIZATION SERVICE
 from services.categorization import auto_categorize
 
 router = APIRouter(
@@ -58,7 +60,7 @@ def create_transaction(
         amount=transaction.amount,
         txn_type=transaction.txn_type,
         description=transaction.description,
-        category=category   # ✅ ADDED
+        category=category
     )
 
     db.add(new_txn)
@@ -106,7 +108,7 @@ def upload_transactions_csv(
             amount=float(row["amount"]),
             txn_type=row["txn_type"],
             description=description,
-            category=category   # ✅ ADDED
+            category=category
         )
 
         db.add(txn)
