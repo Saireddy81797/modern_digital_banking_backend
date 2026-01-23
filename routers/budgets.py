@@ -6,7 +6,7 @@ from database import get_db
 from models import Budget, Transaction
 from schemas import BudgetCreate, BudgetResponse
 
-# ✅ FIXED IMPORT (auth utils file)
+# ✅ FIXED IMPORT
 from routers.auth_utils import get_current_user
 
 
@@ -31,9 +31,11 @@ def create_budget(
         category=budget.category,
         limit_amount=budget.limit_amount
     )
+
     db.add(new_budget)
     db.commit()
     db.refresh(new_budget)
+
     return new_budget
 
 
@@ -51,7 +53,7 @@ def list_budgets(
 
 
 # =================================================
-# C) BUDGET PROGRESS (WEEK-4 CORE LOGIC 🔥)
+# C) BUDGET PROGRESS + WARNING LOGIC 🔥🔥
 # =================================================
 @router.get("/progress", response_model=list[BudgetResponse])
 def budget_progress(
@@ -62,7 +64,10 @@ def budget_progress(
         Budget.user_id == current_user.id
     ).all()
 
+    results = []
+
     for b in budgets:
+        # 🔹 Calculate spent amount from transactions
         spent = db.query(func.sum(Transaction.amount)).filter(
             Transaction.category == b.category,
             Transaction.txn_type == "debit",
@@ -72,5 +77,25 @@ def budget_progress(
 
         b.spent_amount = spent
 
-    db.commit()
-    return budgets
+        # 🔹 WARNING LOGIC
+        warning = None
+
+        if spent >= b.limit_amount:
+            warning = "❌ Budget limit exceeded!"
+        elif spent >= 0.8 * b.limit_amount:
+            warning = "⚠ You are close to your budget limit"
+
+        # 🔹 Attach warning dynamically
+        response = BudgetResponse(
+            id=b.id,
+            month=b.month,
+            year=b.year,
+            category=b.category,
+            limit_amount=b.limit_amount,
+            spent_amount=spent,
+            warning=warning
+        )
+
+        results.append(response)
+
+    return results
