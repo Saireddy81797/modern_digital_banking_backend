@@ -69,7 +69,7 @@ class BudgetCreate(BaseModel):
 class BudgetResponse(BudgetCreate):
     id: int
     spent_amount: float
-    warning: Optional[str] = None   # 🔥 NEW FIELD
+    warning: str | None = None   # 🔥 must be here
 
     class Config:
         orm_mode = True
