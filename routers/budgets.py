@@ -67,15 +67,21 @@ def budget_progress(
     results = []
 
     for b in budgets:
-        # 🔹 Calculate spent amount from transactions
-        spent = db.query(func.sum(Transaction.amount)).filter(
-            Transaction.category == b.category,
-            Transaction.txn_type == "debit",
-            extract("month", Transaction.created_at) == b.month,
-            extract("year", Transaction.created_at) == b.year
-        ).scalar() or 0
+    spent = db.query(func.sum(Transaction.amount)).filter(
+        Transaction.category == b.category,
+        Transaction.txn_type == "debit",
+        extract("month", Transaction.created_at) == b.month,
+        extract("year", Transaction.created_at) == b.year
+    ).scalar() or 0
 
-        b.spent_amount = spent
+    b.spent_amount = spent
+
+    # 🔥 WARNING LOGIC
+    if spent > b.limit_amount:
+        b.warning = "⚠ Budget limit exceeded!"
+    else:
+        b.warning = "✅ Within budget"
+
 
         # 🔹 WARNING LOGIC
         warning = None
