@@ -1,4 +1,5 @@
-from sqlalchemy import Column, Integer, String, Float, ForeignKey, Date
+from sqlalchemy import Column, Integer, String, Float, ForeignKey, DateTime
+from datetime import datetime
 from sqlalchemy.orm import relationship
 from database import Base
 
@@ -56,6 +57,9 @@ class Transaction(Base):
 
     # ✅ ADDED FOR MILESTONE-2
     category = Column(String, default="others")
+
+    # 🔹 ADD THIS LINE (needed for monthly budget calculation)
+    created_at = Column(DateTime, default=datetime.utcnow)
 
     account = relationship("Account", back_populates="transactions")
 
