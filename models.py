@@ -40,8 +40,6 @@ class Account(Base):
 
 
 # =========================
-# TRANSACTION MODEL
-# =========================
 class Transaction(Base):
     __tablename__ = "transactions"
 
@@ -55,10 +53,9 @@ class Transaction(Base):
     )
     description = Column(String, nullable=True)
 
-    # ✅ ADDED FOR MILESTONE-2
     category = Column(String, default="others")
 
-    # 🔹 ADD THIS LINE (needed for monthly budget calculation)
+    # ✅ REQUIRED FOR BUDGET CALCULATION
     created_at = Column(DateTime, default=datetime.utcnow)
 
     account = relationship("Account", back_populates="transactions")
