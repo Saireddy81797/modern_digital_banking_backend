@@ -69,10 +69,9 @@ class BudgetCreate(BaseModel):
 class BudgetResponse(BudgetCreate):
     id: int
     spent_amount: float
-
-    # 🔹 NEW FIELD (for warning when limit exceeded)
-    warning: Optional[str] = None
+    warning: Optional[str] = None   # ✅ ADD THIS LINE
 
     class Config:
-        from_attributes = True   # 🔹 Pydantic v2 fix
+        orm_mode = True
+
 
