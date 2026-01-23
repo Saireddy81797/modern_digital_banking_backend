@@ -40,18 +40,20 @@ class TransactionCreate(BaseModel):
     description: Optional[str] = None
 
 
+from datetime import datetime
+
 class TransactionResponse(BaseModel):
     id: int
     account_id: int
     amount: float
     txn_type: str
     description: Optional[str] = None
-
-    # ✅ ADDED FOR MILESTONE-2
     category: Optional[str] = "others"
+    created_at: datetime
 
     class Config:
-        orm_mode = True
+        from_attributes = True   # 🔹 Pydantic v2 fix
+
 
 
 # =========================
@@ -68,5 +70,9 @@ class BudgetResponse(BudgetCreate):
     id: int
     spent_amount: float
 
+    # 🔹 NEW FIELD (for warning when limit exceeded)
+    warning: Optional[str] = None
+
     class Config:
-        orm_mode = True
+        from_attributes = True   # 🔹 Pydantic v2 fix
+
