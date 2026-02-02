@@ -1,5 +1,6 @@
 from pydantic import BaseModel, EmailStr, Field
 from typing import Optional
+from datetime import datetime
 
 # =========================
 # AUTH SCHEMAS
@@ -40,8 +41,6 @@ class TransactionCreate(BaseModel):
     description: Optional[str] = None
 
 
-from datetime import datetime
-
 class TransactionResponse(BaseModel):
     id: int
     account_id: int
@@ -52,8 +51,7 @@ class TransactionResponse(BaseModel):
     created_at: datetime
 
     class Config:
-        from_attributes = True   # 🔹 Pydantic v2 fix
-
+        from_attributes = True   # Pydantic v2 fix
 
 
 # =========================
@@ -69,10 +67,36 @@ class BudgetCreate(BaseModel):
 class BudgetResponse(BudgetCreate):
     id: int
     spent_amount: float
-    warning: str | None = None   # 🔥 must be here
+    warning: Optional[str] = None   # 🔥 Budget warning
 
     class Config:
-        orm_mode = True
+        from_attributes = True
 
 
+# =========================
+# BILL SCHEMAS (MILESTONE-3)
+# =========================
+class BillCreate(BaseModel):
+    bill_name: str
+    amount: float
+    due_date: datetime
 
+
+class BillUpdate(BaseModel):
+    bill_name: Optional[str] = None
+    amount: Optional[float] = None
+    due_date: Optional[datetime] = None
+    is_paid: Optional[bool] = None
+
+
+class BillResponse(BaseModel):
+    id: int
+    bill_name: str
+    amount: float
+    due_date: datetime
+    is_paid: bool
+    overdue: bool   # 🔥 due date logic output
+    created_at: datetime
+
+    class Config:
+        from_attributes = True
