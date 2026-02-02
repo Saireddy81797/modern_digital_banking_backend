@@ -89,11 +89,11 @@ class Bill(Base):
     __tablename__ = "bills"
 
     id = Column(Integer, primary_key=True, index=True)
-    user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    user_id = Column(Integer, ForeignKey("users.id"), nullable=False, index=True)
 
     bill_name = Column(String, nullable=False)
     amount = Column(Float, nullable=False)
-    due_date = Column(DateTime, nullable=False)
+    due_date = Column(DateTime, nullable=False, index=True)
 
     is_paid = Column(Boolean, default=False)
     created_at = Column(DateTime, default=datetime.utcnow)
