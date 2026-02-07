@@ -1,6 +1,7 @@
 from fastapi import FastAPI
 
 # Import routers
+from routers import insights
 from routers import accounts
 from routers import transactions
 from routers import budgets
@@ -19,6 +20,7 @@ app.include_router(accounts.router)
 app.include_router(transactions.router)
 app.include_router(budgets.router)
 app.include_router(bills.router)
+app.include_router(insights.router)
 
 
 # =========================
